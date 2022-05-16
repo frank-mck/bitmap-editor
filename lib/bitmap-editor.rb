@@ -26,7 +26,9 @@ def process(selection)
   when /^I\s\d+\s\d+$/
     create_canvas(selection)
   when /^L\s\d+\s\d+\s[A-Z]{1}$/
-    color_pixels(selection)
+    color_pixel(selection)
+  when /^V\s\d+\s\d+\s\d+\s[A-Z]{1}$/ 
+    draw_vertical_line(selection)
   when "C" then clear_canvas
   when "X" then exit
   end
@@ -38,7 +40,6 @@ end
 
 def create_canvas(selection)
   coord = selection.scan(/[0-9]+/).map(&:to_i)
-  puts "#{coord}"
   @canvasX = coord[0]
   @canvasY = coord[1]
 
@@ -49,20 +50,41 @@ def create_canvas(selection)
   end
 
   @bitmap = Array.new(@canvasX) { Array.new(@canvasY, 0) }
+  puts "#{@canvasX} x #{@canvasY} canvas created!"
 end
 
-def color_pixels(selection)
-  if !@bitmap
-    puts "Please create a canvas first"
-    return
-  end
+def color_pixel(selection)
+  coord = get_coords(selection)
   color = selection[selection.length - 1]
-  coord = selection.scan(/[0-9]+/).map(&:to_i)
   x = coord[0] - 1
   y = coord[1] - 1
 
   row = @bitmap[y]
   row[x] = color
+end
+
+def draw_vertical_line(selection)
+  coord = get_coords(selection)
+  color = selection[selection.length - 1]
+  column = coord[0] - 1
+  x = coord[1] - 1
+  y = coord[2] - 1
+  
+  i = x
+  ((y - x) + 1).times do
+    @bitmap[x][column] = color
+    x += 1
+  end
+end
+
+def get_coords(selection)
+  if !@bitmap
+    puts "Please create a canvas first"
+    return
+  end
+  
+  coord = selection.scan(/[0-9]+/).map(&:to_i)
+  return coord
 end
 
 def clear_canvas 
