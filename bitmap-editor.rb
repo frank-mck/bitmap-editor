@@ -1,4 +1,6 @@
 @bitmap
+@canvasX
+@canvasY
 
 def print_menu 
   puts "S: Show the contents of the current canvas"
@@ -17,7 +19,8 @@ def process(selection)
   case selection
   when "S" then print_canvas
   when "?" then print_help
-  when /^I\s\d{1,}\s\d{1,}$/ then create_canvas(selection)
+  when /^I\s\d+\s\d+$/ then create_canvas(selection)
+  when "C" then clear_canvas
   when "X" then exit
   end
 end
@@ -28,10 +31,14 @@ end
 
 def create_canvas(selection)
   coord = selection.scan(/[0-9]+/).map(&:to_i)
-  x = coord[0]
-  y = coord[1]
+  @canvasX = coord[0]
+  @canvasY = coord[1]
 
-  @bitmap = Array.new(x) { Array.new(y, 0) }
+  @bitmap = Array.new(@canvasX) { Array.new(@canvasY, 0) }
+end
+
+def clear_canvas 
+  @bitmap = Array.new(@canvasX) { Array.new(@canvasY, 0) }
 end
 
 def print_help
