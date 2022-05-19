@@ -101,5 +101,25 @@ describe BitmapEditor do
       end
     end
 
+    describe ".fill_region" do
+      it "Print error message if user is trying to fill region without creating a canvas" do
+        expect do
+          string = "F 3 4 B"
+          bitmapEditor.process(string)
+        end.to output("Please create a canvas first\n").to_stdout
+      end
+
+      it "fills a region on the canvas" do
+        expect do
+          string = "I 5 5"
+          bitmapEditor.process(string)
+
+          string = "F 3 4 B"
+          bitmapEditor.process(string)
+          string = "S"
+          bitmapEditor.process(string)
+        end.to output("5 x 5 canvas created!\nBBBB0\nBBBB0\nBBBB0\n00000\n00000\n").to_stdout
+      end
+    end
   end
 end
