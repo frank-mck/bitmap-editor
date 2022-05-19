@@ -1,20 +1,14 @@
 require_relative 'help'
 
 class BitmapEditor
+  attr_reader :bitmap
   MAX_PIXELS = 250
   MIN_PIXELS = 1
 
   def initialize
-    @bitmap
+    @bitmap = []
     @canvasX
     @canvasY 
-  end
-
-  def print_menu 
-    puts "I M N: Create a new M x N canvas with all pixels colored white (0)"
-    puts "S: Show the contents of the current canvas"
-    puts "X: Terminate the session"
-    puts "?: Shows in program help"
   end
   
   def interactive_menu
@@ -36,13 +30,15 @@ class BitmapEditor
       draw_vertical_line(selection)
     when /^H\s\d+\s\d+\s\d+\s[A-Z]{1}$/
       draw_horizonal_line(selection)
+    when /^F\s\d+\s\d+\s[A-Z]{1}$/
+      fill_region(selection)
     when "C" then clear_canvas
     when "X" then exit
     end
   end
   
   def print_canvas
-    if !@bitmap
+    if @bitmap.length == 0
       puts "Please create a canvas first"
       return
     end
@@ -50,7 +46,7 @@ class BitmapEditor
   end
   
   def create_canvas(selection)
-    coord = selection.scan(/[0-9]+/).map(&:to_i)
+    coord = get_coords(selection)
     @canvasX = coord[0]
     @canvasY = coord[1]
   
@@ -65,7 +61,7 @@ class BitmapEditor
   end
   
   def color_pixel(selection)
-    if !@bitmap
+    if @bitmap.length == 0
       puts "Please create a canvas first"
       return
     end
@@ -79,7 +75,7 @@ class BitmapEditor
   end
   
   def draw_vertical_line(selection)
-    if !@bitmap
+    if @bitmap.length == 0
       puts "Please create a canvas first"
       return
     end
@@ -97,6 +93,10 @@ class BitmapEditor
   end
 
   def draw_horizonal_line(selection)
+    if @bitmap.length == 0
+      puts "Please create a canvas first"
+      return
+    end
     coord = get_coords(selection)
     color = selection[selection.length - 1]
     row = coord[2] - 1
@@ -109,6 +109,8 @@ class BitmapEditor
       x += 1
     end
   end
+
+  private
   
   def get_coords(selection)
     return selection.scan(/[0-9]+/).map(&:to_i)
@@ -118,8 +120,17 @@ class BitmapEditor
     @bitmap = Array.new(@canvasX) { Array.new(@canvasY, 0) }
     puts "Canvas cleared!"
   end
+
+  def print_menu 
+    puts "I M N: Create a new M x N canvas with all pixels colored white (0)"
+    puts "S: Show the contents of the current canvas"
+    puts "X: Terminate the session"
+    puts "?: Shows in program help"
+  end
 end
 
-bitmap = BitmapEditor.new
+if __FILE__ == $0
+  bitmap = BitmapEditor.new
 
-bitmap.interactive_menu
+  bitmap.interactive_menu
+end
