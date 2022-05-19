@@ -21,3 +21,20 @@ Draw a vertical segment of colour C in column X between rows Y1 and Y2 (inclusiv
 Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
 - F X Y C:
 Fill the region R with the colour C. R is defined as: Pixel (X,Y) belongs to R.
+
+## How to use
+
+```
+git clone https://github.com/frank-mck/bitmap-editor.git
+cd bitmap-editor
+ruby ./lib/BitmapEditor.rb
+```
+
+Run tests
+
+``` 
+gem install rspec
+rspec
+```
+
+Have fun!! :)
