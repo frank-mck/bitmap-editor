@@ -4,6 +4,13 @@ describe BitmapEditor do
   describe ".process" do
     let(:bitmapEditor) { BitmapEditor.new }
 
+    it "Returns an error message if invalid command is inputted" do
+      expect do
+        string = "I 44"
+        bitmapEditor.process(string)
+      end.to output("Invalid command\n").to_stdout
+    end
+
     describe ".create_canvas" do
       it "Should initialize with an empty canvas" do
         expect(bitmapEditor.bitmap.length).to eq(0)
