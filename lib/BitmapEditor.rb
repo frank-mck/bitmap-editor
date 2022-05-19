@@ -33,7 +33,8 @@ class BitmapEditor
       no_canvas? ? (puts "Please create a canvas first") : draw_horizonal_line(selection)
     when /^F\s\d+\s\d+\s[A-Z]{1}$/
       no_canvas? ? (puts "Please create a canvas first") : fill_region(selection)
-    when "C" then clear_canvas
+    when "C"
+      no_canvas? ? (puts "Please create a canvas first") : clear_canvas
     when "X" then exit
     end
   end
@@ -112,15 +113,15 @@ class BitmapEditor
     end
   end
 
+  def clear_canvas 
+    @bitmap = Array.new(@canvasX) { Array.new(@canvasY, 0) }
+    puts "Canvas cleared!"
+  end
+
   private
   
   def get_coords(selection)
     return selection.scan(/[0-9]+/).map(&:to_i)
-  end
-  
-  def clear_canvas 
-    @bitmap = Array.new(@canvasX) { Array.new(@canvasY, 0) }
-    puts "Canvas cleared!"
   end
 
   def print_menu 

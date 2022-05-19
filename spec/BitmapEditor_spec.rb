@@ -121,5 +121,31 @@ describe BitmapEditor do
         end.to output("5 x 5 canvas created!\nBBBB0\nBBBB0\nBBBB0\n00000\n00000\n").to_stdout
       end
     end
+
+    describe ".clear_canvas" do
+      it "Print error message if user is trying to clear canvas without creating a canvas" do
+        expect do
+          string = "C"
+          bitmapEditor.process(string)
+        end.to output("Please create a canvas first\n").to_stdout
+      end
+
+      it "Clears the canvas" do
+        string = "I 4 4"
+        bitmapEditor.process(string)
+        string = "L 3 1 A"
+        bitmapEditor.process(string)
+        expect do
+          string = "S"
+          bitmapEditor.process(string)
+        end.to output("00A0\n0000\n0000\n0000\n").to_stdout
+        expect do
+          string = "C"
+          bitmapEditor.process(string)
+          string = "S"
+          bitmapEditor.process(string)
+        end.to output("Canvas cleared!\n0000\n0000\n0000\n0000\n").to_stdout
+      end
+    end
   end
 end
