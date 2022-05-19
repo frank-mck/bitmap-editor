@@ -42,7 +42,7 @@ class BitmapEditor
       puts "Please create a canvas first"
       return
     end
-    @bitmap.each { |row| puts row.join.center(100) }
+    @bitmap.each { |row| puts row.join }
   end
   
   def create_canvas(selection)
