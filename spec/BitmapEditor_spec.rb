@@ -1,10 +1,10 @@
 require_relative '../lib/BitmapEditor.rb'
 
 describe BitmapEditor do
-  describe "#process" do
+  describe ".process" do
     let(:bitmapEditor) { BitmapEditor.new }
 
-    context "#create_canvas" do
+    describe ".create_canvas" do
       it "Should initialize with an empty canvas" do
         expect(bitmapEditor.bitmap.length).to eq(0)
       end
@@ -16,7 +16,7 @@ describe BitmapEditor do
       end
     end
 
-    context "#print_canvas" do
+    describe ".print_canvas" do
       it "Print error message if user is trying to view canvas without creating one" do
         expect do
           string = "S"
