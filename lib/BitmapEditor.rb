@@ -2,7 +2,7 @@ require_relative 'help'
 
 class BitmapEditor
   attr_reader :bitmap
-  
+
   MAX_PIXELS = 250
   MIN_PIXELS = 1
 
@@ -38,6 +38,8 @@ class BitmapEditor
     when "X" then exit
     end
   end
+
+  private
 
   def no_canvas?
     @bitmap.length == 0
