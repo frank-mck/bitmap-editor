@@ -1,5 +1,5 @@
 def print_help
-  puts "Commands".center(100)
+  puts "Commands"
   puts"I M N"
   puts "Create a new M x N canvas with all pixels colored white (0)"
   puts ""
@@ -17,5 +17,5 @@ def print_help
   puts ""
   puts "F X Y C"
   puts "Fill the region R with color C. R is defined as pixel (X,Y)"
-  puts "--------------------------------------".center(100)
+  puts "--------------------------------------"
 end

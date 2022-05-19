@@ -135,16 +135,27 @@ describe BitmapEditor do
         bitmapEditor.process(string)
         string = "L 3 1 A"
         bitmapEditor.process(string)
+
         expect do
           string = "S"
           bitmapEditor.process(string)
         end.to output("00A0\n0000\n0000\n0000\n").to_stdout
+
         expect do
           string = "C"
           bitmapEditor.process(string)
           string = "S"
           bitmapEditor.process(string)
         end.to output("Canvas cleared!\n0000\n0000\n0000\n0000\n").to_stdout
+      end
+    end
+
+    describe ".print_help" do
+      it "prints help" do 
+        expect do
+          string = "?"
+          bitmapEditor.process(string)
+        end.to output("Commands\nI M N\nCreate a new M x N canvas with all pixels colored white (0)\n\nC\nClears the canvas, setting all pixels to white (0)\n\nL X Y C\nColors the pixel (X,Y) with color C\n\nV X X1 Y2 C\nDraw a vertical segment of color C in coloumn X between rows Y1 and Y2 (inclusive)\n\nH X1 X2 Y C\nDraw a horizontal segment of color C in row Y between columns X1 and X2 (inclusive)\n\nF X Y C\nFill the region R with color C. R is defined as pixel (X,Y)\n--------------------------------------\n").to_stdout
       end
     end
   end
