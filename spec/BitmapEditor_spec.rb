@@ -34,5 +34,27 @@ describe BitmapEditor do
         end.to output("1 x 1 canvas created!\n0\n").to_stdout
       end
     end
+
+    describe ".color_pixel" do
+      it "Print error message if user is trying to color a pixel without creating a canvas" do
+        expect do
+          string = "L 2 2 A"
+          bitmapEditor.process(string)
+        end.to output("Please create a canvas first\n").to_stdout
+      end
+
+      it "colors a pixel" do 
+        expect do
+          string = "I 3 3"
+          bitmapEditor.process(string)
+
+          string = "L 3 1 A"
+          bitmapEditor.process(string)
+
+          string = "S"
+          bitmapEditor.process(string)
+        end.to output("3 x 3 canvas created!\n00A\n000\n000\n").to_stdout
+      end
+    end
   end
 end
