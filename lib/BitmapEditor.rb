@@ -96,6 +96,22 @@ class BitmapEditor
     end
   end
 
+  def fill_region(selection)
+    coord = get_coords(selection)
+    color = selection[selection.length - 1]
+    x = coord[0] - 1
+    y = coord[1] - 1
+    ((y + 1)).times do
+      @bitmap[x][y] = color
+      y -= 1
+    end
+
+    y = coord[1]
+    if x > 0
+      return fill_region("F #{x} #{y} #{color}")
+    end
+  end
+
   private
   
   def get_coords(selection)

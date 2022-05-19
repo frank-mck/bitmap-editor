@@ -60,7 +60,7 @@ describe BitmapEditor do
     describe ".draw_vertical_line" do
       it "Print error message if user is trying to draw a line without creating a canvas" do
         expect do
-          string = "V 1 2 2 X"
+          string = "V 1 2 5 X"
           bitmapEditor.process(string)
         end.to output("Please create a canvas first\n").to_stdout
       end
@@ -78,5 +78,28 @@ describe BitmapEditor do
         end.to output("5 x 3 canvas created!\n000\nX00\nX00\nX00\nX00\n").to_stdout
       end
     end
+
+    describe ".draw_horizonal_line" do
+      it "Print error message if user is trying to draw a line without creating a canvas" do
+        expect do
+          string = "H 1 4 2 B"
+          bitmapEditor.process(string)
+        end.to output("Please create a canvas first\n").to_stdout
+      end
+
+      it "Draws a horizontal line" do
+        expect do
+          string = "I 4 4"
+          bitmapEditor.process(string)
+
+          string = "H 1 4 2 B"
+          bitmapEditor.process(string)
+
+          string = "S"
+          bitmapEditor.process(string)
+        end.to output("4 x 4 canvas created!\n0000\nBBBB\n0000\n0000\n").to_stdout
+      end
+    end
+
   end
 end
