@@ -36,6 +36,8 @@ class BitmapEditor
     when "C"
       no_canvas? ? (puts "Please create a canvas first") : clear_canvas
     when "X" then exit
+    else
+      puts "Invalid command"
     end
   end
 
