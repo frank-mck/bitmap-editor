@@ -9,6 +9,31 @@ describe BitmapEditor do
         string = "I 44"
         bitmapEditor.process(string)
       end.to output("Invalid command\n").to_stdout
+
+      expect do
+        string = "F 4 4 A "
+        bitmapEditor.process(string)
+      end.to output("Invalid command\n").to_stdout
+
+      expect do
+        string = "L 4  4 A"
+        bitmapEditor.process(string)
+      end.to output("Invalid command\n").to_stdout
+
+      expect do
+        string = "V 4 4 3 f"
+        bitmapEditor.process(string)
+      end.to output("Invalid command\n").to_stdout
+
+      expect do
+        string = " I 4 4"
+        bitmapEditor.process(string)
+      end.to output("Invalid command\n").to_stdout
+
+      expect do
+        string = "H 2 2 2 a"
+        bitmapEditor.process(string)
+      end.to output("Invalid command\n").to_stdout
     end
 
     describe ".create_canvas" do
