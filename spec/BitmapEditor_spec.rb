@@ -95,6 +95,15 @@ describe BitmapEditor do
         end.to output("Please create a canvas first\n").to_stdout
       end
 
+      it "Print error message if user is trying to draw a line with the wrong dimensions" do
+        expect do
+          string = "I 3 3"
+          bitmapEditor.process(string)
+          string = "V 1 4 2 A"
+          bitmapEditor.process(string)
+        end.to output("3 x 3 canvas created!\nInvalid dimensions\n").to_stdout
+      end
+
       it "Draws a vertical line" do
         expect do
           string = "I 5 5"
@@ -117,6 +126,15 @@ describe BitmapEditor do
         end.to output("Please create a canvas first\n").to_stdout
       end
 
+      it "Print error message if user is trying to draw a line with the wrong dimensions" do
+        expect do
+          string = "I 3 3"
+          bitmapEditor.process(string)
+          string = "H 1 4 2 A"
+          bitmapEditor.process(string)
+        end.to output("3 x 3 canvas created!\nInvalid dimensions\n").to_stdout
+      end
+
       it "Draws a horizontal line" do
         expect do
           string = "I 4 4"
@@ -137,6 +155,15 @@ describe BitmapEditor do
           string = "F 3 4 B"
           bitmapEditor.process(string)
         end.to output("Please create a canvas first\n").to_stdout
+      end
+
+      it "Print error message if user is trying to fill a region with the wrong dimensions" do
+        expect do
+          string = "I 3 3"
+          bitmapEditor.process(string)
+          string = "F 4 2 A"
+          bitmapEditor.process(string)
+        end.to output("3 x 3 canvas created!\nInvalid dimensions\n").to_stdout
       end
 
       it "fills a region on the canvas" do
