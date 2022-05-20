@@ -21,6 +21,20 @@ describe BitmapEditor do
         bitmapEditor.process(string)
         expect(bitmapEditor.bitmap.length).to eq(5)    
       end
+
+      it "Should throw an error message if the canvas is not between 1 - 250 pixels" do
+        expect do
+          string = "I 251 50"
+          bitmapEditor.process(string)
+        end.to output("A canvas can only be between 1 and 250 pixels large\n").to_stdout
+      end
+
+      it "Should throw an error message if the canvas is not between 1 - 250 pixels" do
+        expect do
+          string = "I 51 500"
+          bitmapEditor.process(string)
+        end.to output("A canvas can only be between 1 and 250 pixels large\n").to_stdout
+      end
     end
 
     describe ".print_canvas" do
@@ -50,6 +64,15 @@ describe BitmapEditor do
         end.to output("Please create a canvas first\n").to_stdout
       end
 
+      it "Print error message if user is trying to color a pixel with the wrong dimensions" do
+        expect do
+          string = "I 3 3"
+          bitmapEditor.process(string)
+          string = "L 4 2 A"
+          bitmapEditor.process(string)
+        end.to output("3 x 3 canvas created!\nInvalid dimensions\n").to_stdout
+      end
+
       it "Colors a pixel" do 
         expect do
           string = "I 3 3"
@@ -74,7 +97,7 @@ describe BitmapEditor do
 
       it "Draws a vertical line" do
         expect do
-          string = "I 5 3"
+          string = "I 5 5"
           bitmapEditor.process(string)
 
           string = "V 1 2 5 X"
@@ -82,7 +105,7 @@ describe BitmapEditor do
 
           string = "S"
           bitmapEditor.process(string)
-        end.to output("5 x 3 canvas created!\n000\nX00\nX00\nX00\nX00\n").to_stdout
+        end.to output("5 x 5 canvas created!\n00000\nX0000\nX0000\nX0000\nX0000\n").to_stdout
       end
     end
 

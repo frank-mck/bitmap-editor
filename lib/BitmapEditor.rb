@@ -68,6 +68,10 @@ class BitmapEditor
     color = selection[selection.length - 1]
     x = coord[0] - 1
     y = coord[1] - 1  
+    if (x + 1 > @canvasX || y + 1 > @canvasY) 
+      puts "Invalid dimensions"
+      return 
+    end
     row = @bitmap[y]
     row[x] = color
   end
@@ -79,6 +83,10 @@ class BitmapEditor
     x = coord[1] - 1
     y = coord[2] - 1    
     i = x
+    if (x + 1 > @canvasX || y + 1 > @canvasY) 
+      puts "Invalid dimensions"
+      return 
+    end
     ((y - x) + 1).times do
       @bitmap[x][column] = color
       x += 1
@@ -92,6 +100,10 @@ class BitmapEditor
     x = coord[0] - 1
     y = coord[1] - 1
     i = x
+    if (x + 1 > @canvasX || y + 1 > @canvasY) 
+      puts "Invalid dimensions"
+      return 
+    end
     ((y - x) + 1).times do
       @bitmap[row][x] = color
       x += 1
@@ -103,6 +115,11 @@ class BitmapEditor
     color = selection[selection.length - 1]
     x = coord[0] - 1
     y = coord[1] - 1
+    if (x + 1 > @canvasX || y + 1 > @canvasY) 
+      puts "Invalid dimensions"
+      return 
+    end
+    
     ((y + 1)).times do
       @bitmap[x][y] = color
       y -= 1
